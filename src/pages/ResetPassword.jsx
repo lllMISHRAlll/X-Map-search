@@ -64,14 +64,14 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.forgotContainer}>
       <div className={styles.left}>
         <img src="X symbol.png" alt="Logo" className={styles.logo} />
         <h1>Reset Password</h1>
         <p>Set a new password for your account.</p>
       </div>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.forgotForm} onSubmit={handleSubmit}>
         <div className={styles.passwordWrapper}>
           <input
             type={showPassword ? "text" : "password"}
@@ -83,7 +83,7 @@ const ResetPassword = () => {
           />
           <Icon
             icon={showPassword ? "mdi:eye-off" : "mdi:eye"}
-            className={styles.eyeIcon}
+            className={styles.fEyeIcon}
             onClick={() => setShowPassword((prev) => !prev)}
           />
         </div>

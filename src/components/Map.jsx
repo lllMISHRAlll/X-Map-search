@@ -11,14 +11,6 @@ const libraries = ["places"];
 export default function Map({ user, selectedLocation: externalLocation }) {
   const [showUserModal, setShowUserModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  // const [selectedAddress, setSelectedAddress] = useState("");
-  // const [userInfo, setUserInfo] = useState({ name: "", email: "" });
-
-  // useEffect(() => {
-  //   const name = localStorage.getItem("username") || "";
-  //   const email = localStorage.getItem("email") || "";
-  //   setUserInfo({ name, email });
-  // }, []);
 
   useEffect(() => {
     if (externalLocation) {
@@ -36,7 +28,6 @@ export default function Map({ user, selectedLocation: externalLocation }) {
   if (!isLoaded) return <div>Loading Google Maps...</div>;
 
   const handleSelect = async (address, coords) => {
-    // setSelectedAddress(address);
     setSelectedLocation(coords);
 
     try {
@@ -47,7 +38,7 @@ export default function Map({ user, selectedLocation: externalLocation }) {
     }
   };
 
-  console.log('user', user)
+  console.log("user", user);
 
   return (
     <div className={style.main}>
@@ -57,7 +48,11 @@ export default function Map({ user, selectedLocation: externalLocation }) {
         </div>
 
         <div className={style.userCircle} onClick={toggleUserModal}>
-          {user?.profilePic ? <img src={user?.profilePic} /> : (user?.username?.charAt(0).toUpperCase() || "U")}
+          {user?.profilePic ? (
+            <img src={user?.profilePic} />
+          ) : (
+            user?.username?.charAt(0).toUpperCase() || "U"
+          )}
           {showUserModal && (
             <div className={style.userModal}>
               <p>{user.username}</p>

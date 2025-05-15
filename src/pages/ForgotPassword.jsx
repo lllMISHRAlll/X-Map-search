@@ -40,15 +40,15 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.forgotContainer}>
       <div className={styles.left}>
         <img src="X symbol.png" alt="Logo" className={styles.logo} />
         <h1>Forgot Password</h1>
         <p>Enter your registered email to receive a reset link.</p>
       </div>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.inputWrapper}>
+      <form className={styles.forgotForm} onSubmit={handleSubmit}>
+        <div className={styles.forgotInputWrapper}>
           <input
             type="email"
             name="email"

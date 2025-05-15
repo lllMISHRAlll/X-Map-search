@@ -6,6 +6,14 @@
   font-family: sans-serif;
 }
 
+.forgotContainer {
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  font-family: sans-serif;
+  margin: auto;
+}
+
 .left {
   padding-left: 8rem;
   padding-top: 5rem;
@@ -181,6 +189,16 @@ button[disabled] {
   color: #666;
 }
 
+.fEyeIcon {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: #666;
+}
+
 .eyeIcon:hover {
   color: #00235e;
 }
@@ -203,6 +221,22 @@ button[disabled] {
 
 .clearIcon:hover {
   color: rgb(0, 0, 0);
+}
+
+.forgotForm {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 10rem auto auto auto;
+}
+
+.forgotForm input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
 }
 
 /* ------------------------------ */
