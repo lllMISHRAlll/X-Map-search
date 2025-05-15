@@ -1,4 +1,3 @@
-/* Original styles: [unchanged] */
 .container {
   display: flex;
   height: 100vh;
@@ -218,29 +217,28 @@
 }
 
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
   .sidebar {
-    width: 100%;
     height: auto;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     padding: 1rem;
   }
 
+  .sidebar img {
+    width: 3rem;
+  }
+
   .sidebarWrapper {
-    flex-direction: row;
-    justify-content: space-between;
     width: 100%;
     padding: 0 1rem;
   }
 
+  .sidebarWrapper button {
+    width: 3rem;
+  }
+
   .historyButton,
   .activeButton {
-    flex-direction: row;
-    width: auto;
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
@@ -252,7 +250,7 @@
 
   .historyPanel {
     position: fixed;
-    top: 4.5rem;
+    top: 8.5rem;
     left: 0;
     width: 100%;
     height: calc(100vh - 4.5rem);

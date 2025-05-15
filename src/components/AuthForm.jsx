@@ -140,7 +140,7 @@ export default function AuthForm({ type, onSubmit }) {
           {isSignup ? "Sign Up" : "Login"}
         </button>
 
-        <div className={styles.divider}>or</div>
+        <div className={styles.divider}></div>
 
         <div className={styles.oauth}>
           <button type="button">

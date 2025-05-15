@@ -5,6 +5,7 @@
   overflow: hidden;
   border-radius: 10px;
 }
+
 .topBar {
   position: absolute;
   top: 0;
@@ -63,6 +64,7 @@
 
 .userModal p {
   color: black;
+  margin: 0;
 }
 
 .logoutButton {
@@ -73,4 +75,54 @@
   border-radius: 4px;
   font-size: 0.85rem;
   cursor: pointer;
+}
+
+/* ------------------------------- */
+/* ✅ Responsive Breakpoints       */
+/* ------------------------------- */
+
+@media (max-width: 1024px) {
+  .topBar {
+    padding: 0.75rem 1rem;
+    flex-direction: row;
+  }
+
+  .userCircle {
+    width: 45px;
+    height: 45px;
+    font-size: 1.6rem;
+  }
+
+  .userModal {
+    font-size: 0.95rem;
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .searchWrapper {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .userCircle {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    position: absolute;
+    top: 1.2rem;
+    right: 0.4rem;
+  }
+
+  .userModal {
+    font-size: 0.9rem;
+    min-width: 150px;
+    padding: 0.75rem;
+  }
 }
