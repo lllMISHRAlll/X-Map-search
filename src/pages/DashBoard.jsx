@@ -2,17 +2,39 @@ import { useState, useEffect } from "react";
 import styles from "../styleSheets/dashboard.module.css";
 import Map from "../components/Map";
 import { Icon } from "@iconify/react";
-import { getUserHistory } from "../services/userServives";
+import { getUserHistory, deleteUserSearch } from "../services/userServives";
 
 export default function DashBoard() {
   const [showHistory, setShowHistory] = useState(false);
   const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const toggleHistory = () => setShowHistory((prev) => !prev);
 
+  const fetchHistory = async () => {
+    try {
+      setLoading(true);
+      const data = await getUserHistory();
+      setHistory(data);
+    } catch (err) {
+      console.error("Error fetching history", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteUserSearch(id);
+      setHistory((prev) => prev.filter((item) => item._id !== id));
+    } catch (err) {
+      console.error("Error deleting search entry", err);
+    }
+  };
+
   useEffect(() => {
     if (showHistory) {
-      getUserHistory().then(setHistory);
+      fetchHistory();
     }
   }, [showHistory]);
 
@@ -26,12 +48,14 @@ export default function DashBoard() {
             onClick={toggleHistory}
             className={showHistory ? styles.activeButton : styles.historyButton}
           >
-            {showHistory ? (
-              <Icon icon="material-symbols:bookmark" />
-            ) : (
-              <Icon icon="material-symbols:history" />
-            )}
-            History
+            <Icon
+              icon={
+                showHistory
+                  ? "material-symbols:bookmark"
+                  : "material-symbols:history"
+              }
+            />
+            <span>History</span>
           </button>
         </div>
       </div>
@@ -50,32 +74,44 @@ export default function DashBoard() {
                 className={styles.searchBar}
               />
             </div>
-
             <Icon icon="mdi:filter-outline" className={styles.filterIcon} />
             <Icon icon="mdi:filter-variant" className={styles.filterIcon} />
           </div>
 
           <div className={styles.historyList}>
-            {history.map((item, idx) => (
-              <div key={idx} className={styles.historyItem}>
-                <div>
-                  <Icon icon="humbleicons:location" width="24" />
+            {loading ? (
+              <p style={{ padding: "1rem", color: "#888" }}>
+                Loading history...
+              </p>
+            ) : history.length === 0 ? (
+              <p style={{ padding: "1rem", color: "#888" }}>
+                No search history yet.
+              </p>
+            ) : (
+              history.map((item, idx) => (
+                <div key={idx} className={styles.historyItem}>
                   <div>
-                    <h4>{item.label}</h4>
-                    <p>{item.address}</p>
+                    <Icon icon="humbleicons:location" width="24" />
+                    <div>
+                      <h4>{item.label || item.address.split(",")[0]}</h4>
+                      <p>{item.address}</p>
+                    </div>
                   </div>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    <Icon icon="material-symbols:delete" />
+                  </button>
                 </div>
-                <button className={styles.deleteButton}>
-                  <Icon icon="material-symbols:delete" />
-                </button>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       )}
 
       <div className={styles.body}>
-        <Map />
+        <Map onSearchComplete={fetchHistory} />
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import style from "../styleSheets/map.module.css";
 import GoogleMapComponent from "../components/GoogleMap";
 import AddressSearch from "./AddressSearch";
 import { logoutUser } from "../services/authServices";
+import { saveUserSearch } from "../services/userServives";
 
 const libraries = ["places"];
 
@@ -28,11 +29,17 @@ export default function Map() {
 
   if (!isLoaded) return <div>Loading Google Maps...</div>;
 
-  const handleSelect = (address, coords) => {
+  const handleSelect = async (address, coords) => {
     setSelectedAddress(address);
     setSelectedLocation(coords);
-  };
 
+    try {
+      await saveUserSearch(address, coords);
+      console.log("Search saved:", address);
+    } catch (err) {
+      console.error("Failed to save search:", err);
+    }
+  };
   return (
     <div className={style.main}>
       <div className={style.topBar}>

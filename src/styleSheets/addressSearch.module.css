@@ -36,7 +36,7 @@
 
 .clearIcon {
   position: absolute;
-  right: 7rem; /* Adjust this if button width changes */
+  right: 7rem;
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.2rem;
@@ -53,4 +53,68 @@
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
+}
+
+.historyModal {
+  position: absolute;
+  top: 75%;
+  left: 1.4%;
+  right: 0;
+  z-index: 10;
+  background: white;
+  border: 1px solid #ccc;
+  max-width: 250px;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.historyItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.historyIcon {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.historyText {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  overflow: hidden;
+  flex: 1;
+}
+
+.historyText h4,
+.historyText p {
+  margin: 0;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.historyText h4 {
+  font-weight: 600;
+  max-width: 40%;
+  font-size: 0.8rem;
+}
+
+.historyText p {
+  color: #777;
+  max-width: 60%;
+  font-size: 0.8rem;
+}
+
+.historyItem:hover {
+  background-color: #f5f5f5;
 }

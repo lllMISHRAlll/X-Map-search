@@ -1,3 +1,4 @@
+/* Original styles: [unchanged] */
 .container {
   display: flex;
   height: 100vh;
@@ -25,7 +26,8 @@
   gap: 1rem;
 }
 
-.historyButton {
+.historyButton,
+.activeButton {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,29 +42,18 @@
   transition: 0.3s;
 }
 
+.activeButton {
+  background-color: #00235e;
+  color: white;
+}
+
 .body {
   width: 90%;
   padding: 1.5rem;
   background-color: #f0f0f0;
 }
 
-.activeButton {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #00235e;
-  color: white;
-  width: 6.5rem;
-  border: none;
-  padding: 1rem;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-/** History sec **/
-
+/* History section */
 .historyPanel {
   position: absolute;
   top: 0;
@@ -188,14 +179,6 @@
   }
 }
 
-.searchBar {
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
-}
-
 .saveButton {
   padding: 0.75rem;
   background-color: #007bff;
@@ -203,4 +186,96 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+/* ----------------------------------------- */
+/* ✅ Responsive Styles for Tablet & Mobile  */
+/* ----------------------------------------- */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 15%;
+  }
+
+  .body {
+    width: 85%;
+    padding: 1rem;
+  }
+
+  .historyPanel {
+    width: 50%;
+    left: 15%;
+    padding: 1.5rem;
+  }
+
+  .sidebarWrapper button {
+    width: 100%;
+    font-size: 2rem;
+  }
+  .sidebarWrapper button span {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1rem;
+  }
+
+  .sidebarWrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .historyButton,
+  .activeButton {
+    flex-direction: row;
+    width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .body {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .historyPanel {
+    position: fixed;
+    top: 4.5rem;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 4.5rem);
+    padding: 1rem;
+  }
+
+  .historyPanel input {
+    width: 100%;
+  }
+
+  .searchBarWrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .historyItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .historyItem div:first-child {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
 }

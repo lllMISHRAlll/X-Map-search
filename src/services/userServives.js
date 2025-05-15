@@ -1,14 +1,57 @@
-export const getUserHistory = async () => {
-  //     const response = await fetch("/api/user/history");
-  //   return data;
+import axios from "axios";
 
-  return [
-    { label: "Home", address: "Purva Seasons, CV Raman Nagar" },
-    { label: "Work", address: "Manyata Tech Park, Nagavara" },
-    { label: "Cafe", address: "The Coffee Brewery, HRBR Layout" },
+const API = import.meta.env.VITE_BACKEND_URL;
+const token = localStorage.getItem("token");
+
+export const saveUserSearch = async (address, coordinates) => {
+  try {
+    const res = await axios.post(
+      `${API}/api/search/save`,
+      { address, coordinates },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    console.error(
+      "Failed to save search history:",
+      err.response?.data || err.message
+    );
+    throw err;
+  }
+};
+
+export const getUserHistory = async () => {
+  try {
+    const res = await axios.get(`${API}/api/search/get`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return res.data;
+  } catch (err) {
+    console.error(
+      "Failed to fetch user history:",
+      err.response?.data || err.message
+    );
+    throw err;
+  }
+};
+
+export const deleteUserSearch = async (id) => {
+  const token = localStorage.getItem("token");
+  const res = await axios.delete(
+    `${import.meta.env.VITE_BACKEND_URL}/api/search/delete/${id}`,
     {
-      label: "Pharmacy",
-      address: "Netmeds, asdfahksgduayshkfguasddddjh Horamavu Agara Main Rd",
-    },
-  ];
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return res.data;
 };
