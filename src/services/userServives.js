@@ -45,13 +45,10 @@ export const getUserHistory = async () => {
 
 export const deleteUserSearch = async (id) => {
   const token = localStorage.getItem("token");
-  const res = await axios.delete(
-    `${import.meta.env.VITE_BACKEND_URL}/api/search/delete/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const res = await axios.delete(`${API}/api/search/delete/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return res.data;
 };

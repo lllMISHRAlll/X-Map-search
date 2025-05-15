@@ -33,7 +33,8 @@ export default function DashBoard() {
   };
 
   useEffect(() => {
-    if (showHistory) {
+    const token = localStorage.getItem("token");
+    if (showHistory && token) {
       fetchHistory();
     }
   }, [showHistory]);
