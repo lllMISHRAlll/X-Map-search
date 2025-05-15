@@ -1,3 +1,4 @@
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import routesConfig from "./config/routesConfig.jsx";
 import { ToastContainer } from "react-toastify";
