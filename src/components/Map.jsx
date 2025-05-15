@@ -4,10 +4,13 @@ import style from "../styleSheets/map.module.css";
 import GoogleMapComponent from "../components/GoogleMap";
 import AddressSearch from "./AddressSearch";
 
-const libraries = ["places"]; // ✅ static to prevent reload
+const libraries = ["places"];
 
 export default function Map() {
   const [showUserModal, setShowUserModal] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState("");
+
   const toggleUserModal = () => setShowUserModal((prev) => !prev);
 
   const { isLoaded } = useJsApiLoader({
@@ -17,15 +20,16 @@ export default function Map() {
 
   if (!isLoaded) return <div>Loading Google Maps...</div>;
 
+  const handleSelect = (address, coords) => {
+    setSelectedAddress(address);
+    setSelectedLocation(coords);
+  };
+
   return (
     <div className={style.main}>
       <div className={style.topBar}>
         <div className={style.searchWrapper}>
-          <AddressSearch
-            onSelect={(address, coords) => {
-              console.log("Selected:", address, coords);
-            }}
-          />
+          <AddressSearch onSelect={handleSelect} />
         </div>
 
         <div className={style.userCircle} onClick={toggleUserModal}>
@@ -44,7 +48,7 @@ export default function Map() {
         </div>
       </div>
 
-      <GoogleMapComponent />
+      <GoogleMapComponent center={selectedLocation} marker={selectedLocation} />
     </div>
   );
 }
