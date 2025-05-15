@@ -138,3 +138,10 @@
     align-self: flex-end;
   }
 }
+
+@media (max-width: 454px) {
+  .searchIcon {
+    top: 1.5rem;
+    left: 0;
+  }
+}

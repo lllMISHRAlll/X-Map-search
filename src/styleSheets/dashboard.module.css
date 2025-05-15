@@ -116,6 +116,10 @@
   flex-wrap: wrap;
 }
 
+.historyItemInfo {
+  cursor: pointer;
+}
+
 .deleteButton {
   background: none;
   border: none;

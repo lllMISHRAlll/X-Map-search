@@ -8,7 +8,7 @@ import { saveUserSearch } from "../services/userServives";
 
 const libraries = ["places"];
 
-export default function Map({ user }) {
+export default function Map({ user, selectedLocation: externalLocation }) {
   const [showUserModal, setShowUserModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
@@ -19,6 +19,12 @@ export default function Map({ user }) {
     const email = localStorage.getItem("email") || "";
     setUserInfo({ name, email });
   }, []);
+
+  useEffect(() => {
+    if (externalLocation) {
+      setSelectedLocation(externalLocation);
+    }
+  }, [externalLocation]);
 
   const toggleUserModal = () => setShowUserModal((prev) => !prev);
 
@@ -40,6 +46,7 @@ export default function Map({ user }) {
       console.error("Failed to save search:", err);
     }
   };
+
   return (
     <div className={style.main}>
       <div className={style.topBar}>
@@ -48,7 +55,7 @@ export default function Map({ user }) {
         </div>
 
         <div className={style.userCircle} onClick={toggleUserModal}>
-          U
+          {user?.username?.charAt(0).toUpperCase() || "U"}
           {showUserModal && (
             <div className={style.userModal}>
               <p>{user.username}</p>

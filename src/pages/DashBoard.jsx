@@ -11,6 +11,8 @@ export default function DashBoard() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const toggleHistory = () => setShowHistory((prev) => !prev);
 
@@ -54,8 +56,6 @@ export default function DashBoard() {
     }
   }, [showHistory]);
 
-  console.log("user :", user);
-
   return (
     <div className={styles.container}>
       <div className={styles.sidebar}>
@@ -90,6 +90,8 @@ export default function DashBoard() {
                 type="text"
                 placeholder="Search Map"
                 className={styles.searchBar}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             <Icon icon="mdi:filter-outline" className={styles.filterIcon} />
@@ -106,30 +108,53 @@ export default function DashBoard() {
                 No search history yet.
               </p>
             ) : (
-              history.map((item, idx) => (
-                <div key={idx} className={styles.historyItem}>
-                  <div>
-                    <Icon icon="humbleicons:location" width="24" />
-                    <div>
-                      <h4>{item.label || item.address.split(",")[0]}</h4>
-                      <p>{item.address}</p>
+              (() => {
+                const filtered = history.filter((item) =>
+                  (item.label || item.address)
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+                );
+                return filtered.length === 0 ? (
+                  <p style={{ padding: "1rem", color: "#888" }}>
+                    No entry matched.
+                  </p>
+                ) : (
+                  filtered.map((item, idx) => (
+                    <div key={idx} className={styles.historyItem}>
+                      <div>
+                        <Icon icon="humbleicons:location" width="24" />
+                        <div
+                          className={styles.historyItemInfo}
+                          onClick={() => setSelectedLocation(item.coordinates)}
+                        >
+                          <h4>{item.label || item.address.split(",")[0]}</h4>
+                          <p>{item.address}</p>
+                        </div>
+                      </div>
+                      <button
+                        className={styles.deleteButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(item._id);
+                        }}
+                      >
+                        <Icon icon="material-symbols:delete" />
+                      </button>
                     </div>
-                  </div>
-                  <button
-                    className={styles.deleteButton}
-                    onClick={() => handleDelete(item._id)}
-                  >
-                    <Icon icon="material-symbols:delete" />
-                  </button>
-                </div>
-              ))
+                  ))
+                );
+              })()
             )}
           </div>
         </div>
       )}
 
       <div className={styles.body}>
-        <Map onSearchComplete={fetchHistory} user={user} />
+        <Map
+          onSearchComplete={fetchHistory}
+          user={user}
+          selectedLocation={selectedLocation}
+        />
       </div>
     </div>
   );
