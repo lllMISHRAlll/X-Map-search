@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import styles from "../styleSheets/auth.module.css";
+import { toast } from "react-toastify";
 
 export default function AuthForm({ type, onSubmit }) {
   const isSignup = type === "signup";
@@ -38,6 +39,9 @@ export default function AuthForm({ type, onSubmit }) {
     if (!formValid) return;
     await onSubmit(formData);
     navigate("/dashboard");
+    toast.success(
+      isSignup ? "Signed up successfully" : "Logged in successfully"
+    );
   };
 
   return (

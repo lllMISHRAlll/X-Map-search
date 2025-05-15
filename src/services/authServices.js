@@ -1,4 +1,6 @@
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
+import { toast } from "react-toastify";
 
 const API = import.meta.env.VITE_BACKEND_URL;
 
@@ -8,8 +10,6 @@ export const loginUser = async (data) => {
     const { token, user } = res.data;
 
     localStorage.setItem("token", token);
-    localStorage.setItem("username", user.username);
-    localStorage.setItem("email", user.email);
 
     return res.data;
   } catch (err) {
@@ -24,8 +24,6 @@ export const signupUser = async (data) => {
     const { token, user } = res.data;
 
     localStorage.setItem("token", token);
-    localStorage.setItem("username", user.username);
-    localStorage.setItem("email", user.email);
 
     return res.data;
   } catch (err) {
@@ -34,7 +32,18 @@ export const signupUser = async (data) => {
   }
 };
 
+export const getUser = async () => {
+  try {
+    const res = await axiosInstance.get("/api/auth/user/get");
+    return res.data.user;
+  } catch (err) {
+    console.error("Failed to fetch user:", err.response?.data || err.message);
+    throw err;
+  }
+};
+
 export const logoutUser = () => {
   localStorage.clear();
   window.location.href = "/";
+  toast.success("Logout Successfully");
 };

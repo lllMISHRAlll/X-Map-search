@@ -3,11 +3,14 @@ import styles from "../styleSheets/dashboard.module.css";
 import Map from "../components/Map";
 import { Icon } from "@iconify/react";
 import { getUserHistory, deleteUserSearch } from "../services/userServives";
+import { getUser } from "../services/authServices";
+import { toast } from "react-toastify";
 
 export default function DashBoard() {
   const [showHistory, setShowHistory] = useState(false);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState();
 
   const toggleHistory = () => setShowHistory((prev) => !prev);
 
@@ -27,17 +30,31 @@ export default function DashBoard() {
     try {
       await deleteUserSearch(id);
       setHistory((prev) => prev.filter((item) => item._id !== id));
+      toast.success("History deleted successfully");
     } catch (err) {
-      console.error("Error deleting search entry", err);
+      toast.error("Error deleting search entry", err);
     }
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (showHistory && token) {
+    const fetchUser = async () => {
+      try {
+        const data = await getUser();
+        setUser(data);
+      } catch (err) {
+        console.error("Failed to fetch user", err);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    if (showHistory) {
       fetchHistory();
     }
   }, [showHistory]);
+
+  console.log("user :", user);
 
   return (
     <div className={styles.container}>
@@ -112,7 +129,7 @@ export default function DashBoard() {
       )}
 
       <div className={styles.body}>
-        <Map onSearchComplete={fetchHistory} />
+        <Map onSearchComplete={fetchHistory} user={user} />
       </div>
     </div>
   );

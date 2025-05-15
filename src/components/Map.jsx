@@ -8,7 +8,7 @@ import { saveUserSearch } from "../services/userServives";
 
 const libraries = ["places"];
 
-export default function Map() {
+export default function Map({ user }) {
   const [showUserModal, setShowUserModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
@@ -51,8 +51,8 @@ export default function Map() {
           U
           {showUserModal && (
             <div className={style.userModal}>
-              <p>{userInfo.name}</p>
-              <p>{userInfo.email}</p>
+              <p>{user.username}</p>
+              <p>{user.email}</p>
               <button className={style.logoutButton} onClick={logoutUser}>
                 Logout
               </button>
