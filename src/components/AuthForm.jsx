@@ -17,6 +17,10 @@ export default function AuthForm({ type, onSubmit }) {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const handleOAuthClick = () => {
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/auth/google`;
+  }
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -69,9 +73,8 @@ export default function AuthForm({ type, onSubmit }) {
         onSubmit={handleSubmit}
       >
         <div
-          className={`${
-            !isSignup ? styles.inputWrapper : styles.inputWrapperSignUp
-          } ${styles.emailWrapper}`}
+          className={`${!isSignup ? styles.inputWrapper : styles.inputWrapperSignUp
+            } ${styles.emailWrapper}`}
         >
           <input
             type="email"
@@ -80,9 +83,8 @@ export default function AuthForm({ type, onSubmit }) {
             value={formData.email}
             onChange={handleChange}
             required
-            className={`${
-              formData.email && !isValidEmail ? styles.inputError : ""
-            }`}
+            className={`${formData.email && !isValidEmail ? styles.inputError : ""
+              }`}
           />
           {formData.email && (
             <Icon
@@ -106,9 +108,8 @@ export default function AuthForm({ type, onSubmit }) {
             value={formData.password}
             onChange={handleChange}
             required
-            className={`${
-              formData.password && !isValidPassword ? styles.inputError : ""
-            }`}
+            className={`${formData.password && !isValidPassword ? styles.inputError : ""
+              }`}
           />
           <Icon
             icon={showPassword ? "mdi:eye" : "mdi:eye-off"}
@@ -158,7 +159,9 @@ export default function AuthForm({ type, onSubmit }) {
         <div className={styles.divider}></div>
 
         <div className={styles.oauth}>
-          <button type="button">
+          <button type="button"
+            onClick={handleOAuthClick}
+          >
             <img src="google icon.png" alt="Google" />
             Sign in with Google
           </button>
