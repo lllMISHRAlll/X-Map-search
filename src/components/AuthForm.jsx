@@ -11,7 +11,6 @@ export default function AuthForm({ type, onSubmit }) {
     email: "",
     password: "",
     username: "",
-    phone: "",
     agreed: false,
   });
 
@@ -31,7 +30,7 @@ export default function AuthForm({ type, onSubmit }) {
   const formValid =
     isValidEmail &&
     isValidPassword &&
-    (!isSignup || (formData.username && formData.phone)) &&
+    (!isSignup || formData.username) &&
     formData.agreed;
 
   const handleSubmit = async (e) => {
@@ -70,7 +69,7 @@ export default function AuthForm({ type, onSubmit }) {
           <input
             type="email"
             name="email"
-            placeholder="Enter address"
+            placeholder="Enter email address"
             value={formData.email}
             onChange={handleChange}
             required
@@ -113,16 +112,8 @@ export default function AuthForm({ type, onSubmit }) {
             <input
               type="text"
               name="username"
-              placeholder="Enter your name"
+              placeholder="Enter username"
               value={formData.username}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="phone"
-              placeholder="Enter your phone number"
-              value={formData.phone}
               onChange={handleChange}
               required
             />

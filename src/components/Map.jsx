@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
 import style from "../styleSheets/map.module.css";
 import GoogleMapComponent from "../components/GoogleMap";
 import AddressSearch from "./AddressSearch";
+import { logoutUser } from "../services/authServices";
 
 const libraries = ["places"];
 
@@ -10,6 +11,13 @@ export default function Map() {
   const [showUserModal, setShowUserModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
+  const [userInfo, setUserInfo] = useState({ name: "", email: "" });
+
+  useEffect(() => {
+    const name = localStorage.getItem("username") || "";
+    const email = localStorage.getItem("email") || "";
+    setUserInfo({ name, email });
+  }, []);
 
   const toggleUserModal = () => setShowUserModal((prev) => !prev);
 
@@ -36,13 +44,11 @@ export default function Map() {
           U
           {showUserModal && (
             <div className={style.userModal}>
-              <p>
-                <strong>Username:</strong> johndoe
-              </p>
-              <p>
-                <strong>Email:</strong> john@example.com
-              </p>
-              <button className={style.logoutButton}>Logout</button>
+              <p>{userInfo.name}</p>
+              <p>{userInfo.email}</p>
+              <button className={style.logoutButton} onClick={logoutUser}>
+                Logout
+              </button>
             </div>
           )}
         </div>
