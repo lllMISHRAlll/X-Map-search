@@ -26,7 +26,10 @@ export default function AuthForm({ type, onSubmit }) {
   };
 
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
-  const isValidPassword = formData.password.length >= 6;
+  const isValidPassword =
+    /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{6,}$/.test(
+      formData.password
+    );
 
   const formValid =
     isValidEmail &&
@@ -77,6 +80,9 @@ export default function AuthForm({ type, onSubmit }) {
             value={formData.email}
             onChange={handleChange}
             required
+            className={`${
+              formData.email && !isValidEmail ? styles.inputError : ""
+            }`}
           />
           {formData.email && (
             <Icon
@@ -85,12 +91,14 @@ export default function AuthForm({ type, onSubmit }) {
               onClick={() => setFormData((prev) => ({ ...prev, email: "" }))}
             />
           )}
-          {formData.email && !isValidEmail && (
-            <span className={styles.error}>Enter a valid email address</span>
-          )}
+          <span className={styles.error}>
+            {formData.email && !isValidEmail
+              ? "Enter a valid email address"
+              : "\u00A0"}
+          </span>
         </div>
 
-        <div className={`${styles.passwordWrapper}`}>
+        <div className={styles.passwordWrapper}>
           <input
             type={showPassword ? "text" : "password"}
             name="password"
@@ -98,17 +106,20 @@ export default function AuthForm({ type, onSubmit }) {
             value={formData.password}
             onChange={handleChange}
             required
+            className={`${
+              formData.password && !isValidPassword ? styles.inputError : ""
+            }`}
           />
           <Icon
-            icon={showPassword ? "mdi:eye-off" : "mdi:eye"}
+            icon={showPassword ? "mdi:eye" : "mdi:eye-off"}
             className={styles.eyeIcon}
             onClick={() => setShowPassword((prev) => !prev)}
           />
-          {formData.password && !isValidPassword && (
-            <span className={styles.error}>
-              Password must be at least 6 characters
-            </span>
-          )}
+          <span className={styles.error}>
+            {formData.password && !isValidPassword
+              ? "Password must include a special char, an uppercase and min 6 chars"
+              : "\u00A0"}
+          </span>
         </div>
 
         {isSignup && (

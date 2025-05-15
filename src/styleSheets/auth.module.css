@@ -148,15 +148,17 @@ button[disabled] {
   cursor: pointer;
 }
 
-.inputWrapper {
-  margin-bottom: 1.5rem;
+.error {
+  min-height: 1rem;
+  font-size: 0.8rem;
+  color: red;
+  display: block;
+  margin-top: 0.25rem;
 }
 
-.error {
-  color: red;
-  font-size: 0.8rem;
-  display: block;
-  min-height: 1rem;
+.inputError {
+  border: 1px solid red !important;
+  outline: none;
 }
 
 .passwordWrapper {
@@ -171,7 +173,7 @@ button[disabled] {
 
 .eyeIcon {
   position: absolute;
-  top: 50%;
+  top: 37%;
   right: 0.75rem;
   transform: translateY(-50%);
   cursor: pointer;
