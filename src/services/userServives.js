@@ -1,14 +1,16 @@
+import { toast } from "react-toastify";
 import axiosInstance from "./axiosInstance";
+import { API_ENDPOINTS } from "./constant";
 
 export const saveUserSearch = async (address, coordinates) => {
   try {
-    const res = await axiosInstance.post("/api/search/save", {
+    const res = await axiosInstance.post(API_ENDPOINTS.SAVE_LOCATION, {
       address,
       coordinates,
     });
     return res.data;
   } catch (err) {
-    console.error(
+    toast.error(
       "Failed to save search history:",
       err.response?.data || err.message
     );
@@ -18,10 +20,10 @@ export const saveUserSearch = async (address, coordinates) => {
 
 export const getUserHistory = async () => {
   try {
-    const res = await axiosInstance.get("/api/search/get");
+    const res = await axiosInstance.get(API_ENDPOINTS.GET_LOCATIONS);
     return res.data;
   } catch (err) {
-    console.error(
+    toast.error(
       "Failed to fetch user history:",
       err.response?.data || err.message
     );
@@ -31,10 +33,12 @@ export const getUserHistory = async () => {
 
 export const deleteUserSearch = async (id) => {
   try {
-    const res = await axiosInstance.delete(`/api/search/delete/${id}`);
+    const res = await axiosInstance.delete(
+      `${API_ENDPOINTS.DELETE_LOCATION}/${id}`
+    );
     return res.data;
   } catch (err) {
-    console.error(
+    toast.error(
       "Failed to delete search item:",
       err.response?.data || err.message
     );

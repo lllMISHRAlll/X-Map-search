@@ -135,9 +135,9 @@ export default function AuthForm({ type, onSubmit }) {
           </>
         )}
 
-        <a href="#" className={styles.forgot}>
+        <Link to="/forgot-password" className={styles.forgot}>
           FORGOT PASSWORD?
-        </a>
+        </Link>
 
         <div className={styles.options}>
           <label>
